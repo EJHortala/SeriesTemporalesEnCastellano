@@ -433,9 +433,10 @@ Classification: softmax (simple sigmoid works too but softmax works better)
 
 **Librerias que permiten aplicar deep learning sobre series temporales**
 
-- TensorFlow
-- Theano
-- Keras
+- TensorFlow https://www.tensorflow.org/
+- Theano http://deeplearning.net/software/theano/
+- Keras: Keras es una librera de alto nivel escrita en Python con un alto grado de abstracción, que permite trabajar sobre otras librerías más especializadas en deep learning como TensowFlow o Theano. https://keras.io/
+- Lasagne http://lasagne.readthedocs.io/en/latest/index.html
 
 ************
 
