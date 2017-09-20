@@ -314,13 +314,14 @@ Los métodos de predicción basados en redes neuronales artificiales están basa
 - Un conjunto de entradas.
 - Un conjunto de pesos sinápticos, correspondientes a cada entrada.
 - Una función de agregación, Σ.
-- Una función de activación, f.
+- Una función de activación (de transferencia), f.
 - Un conjunto de salidas.
 
 ![STexample](./images/ann.png)
 
 Luego cada neurona va a recibir un conjunto de entradas ponderadas por un peso específico, a las que le aplica una función de activación una vez realizado el sumatorio del valor de las mismas, para obtener así una salida. Los pesos son valores reales que multiplican a las entradas. En un principio los pesos son inicializados aleatoriamente (luego hay una componente aleatoria asociada a cada red neuronal), pero estos pesos se actualizan mediante algoritmos de entrenamiento sobre los datos observados que minimizan una función de coste, por lo que van a representar el conocimiento de la red. 
-La función de activación define la salida de la neurona, se puede decir que representa el potencial de activación de la neurona...
+La función de activación es la característica principal de las neuronas ya que define la salida de la neurona y por tanto, su forma de comportarse. Su labor consiste en mapear los valores de entrada en valores de salida.
+
 
 En su forma simplificada, esta función es binaria, esto es, se activa la neurona o no. Una función rampa también puede ser usada para reflejar el incremento del potencial de activación que ocurre cuando la entrada se incrementa.  Esta función de activación es lineal, y por consiguiente tiene los mismos problemas que la función binaria. Los problemas mencionados anteriormente, pueden ser manejados usando una función de activación sigmoidal. La función de tangente hiperbólica puede también ser cualquier función sigmoidal.
 
