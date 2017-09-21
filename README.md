@@ -307,19 +307,19 @@ ________________________________________________________________________
 
 ## Predicción de series temporales con redes neuronales
 
-Hasta ahora, los enfoques de análisis de series temporales se han llevado a cabo desde un punto de vista lineal, ya que con los métodos vistos anteriormente se obtienen resultados satisfactorios en series de tiempo lineales, pero al utilizarlos en series no lineales, presentan limitaciones ya que no son capaces de capturar las relaciones no lineales de los datos. Así entran en juego los métodos capaces de capturar las relaciones lineales y no lineales entre los datos, como son las **redes neuronales**.
+Hasta ahora, los enfoques de análisis de series temporales se han llevado a cabo desde un punto de vista lineal, ya que con los métodos vistos anteriormente se obtienen resultados satisfactorios en series de tiempo lineales, pero al utilizarlos en series con patrones intrínsecos no lineales, presentan limitaciones ya que no son capaces de capturar las relaciones no lineales de los datos. Así entran en juego los métodos capaces de capturar las relaciones lineales y no lineales entre los datos, como son las **redes neuronales**.
 
 Los métodos de predicción basados en redes neuronales artificiales están basados en modelos matemáticos simples del cerebro. Una red neuronal puede ser vista como una red de neuronas organizadas en capas, en la que los predictores (o entradas) forman la capa más baja y las predicciones (salidas) forman la capa más alta. Entre ambas capas pueden existir capas intermedias con neuronas ocultas. Esta capa intermedia oculta es la que permite una relación no linear entre las entradas y las salidas permitiendo al modelo más grados de libertad (ya que se emplean funciones de activación no lineales)(si solo se tuvieran la capa de entrada y salida sería una regresión lineal (modelo más simple)). Una neurona artificial consta de los siguientes elementos:
 
 - Un conjunto de entradas, x.
-- Un conjunto de pesos sinápticos (o conexiones), correspondientes a cada entrada, w.
+- Un conjunto de pesos sinápticos (o conexiones), correspondientes a cada entrada de la neurona, w.
 - Una función de agregación (o de red, o de propagación), Σ.
 - Una función de activación (o de transferencia), f.
 - Un conjunto de salidas.
 
 ![STexample](./images/ann.png)
 
-Luego cada neurona va a recibir un conjunto de entradas ponderadas por un peso específico, a las que le aplica una función de activación una vez realizado el sumatorio del valor de las mismas, para obtener así una salida. Los pesos son valores reales que multiplican a las entradas. En un principio los pesos son inicializados aleatoriamente (luego hay una componente aleatoria asociada a cada red neuronal), pero estos pesos se actualizan mediante algoritmos de entrenamiento sobre los datos observados que minimizan una función de coste, por lo que van a representar el conocimiento de la red. La función de activación es la característica principal de las neuronas ya que define la salida de la neurona y por tanto, su forma de comportarse (su estado de activación). Su labor consiste en mapear los valores de entrada en valores de salida. Estas funciones pueden ser funciones lineales (su uso es limitado), en las que la salida es proporcional a la entrada; funciones de umbral, en las cuales la salida es un valor discreto (típicamente binario 0/1, se activa la neurona o no según se supere un umbral) que depende de si la activación total supera o no un determinado valor de umbral; y funciones no lineales, no proporcionales a la entrada (las comunmente empleadas). Entre las ms empleadas encontramos:
+En una red neuronal, cada neurona va a recibir un conjunto de entradas ponderadas por un peso específico, a las que le aplica una función de activación una vez realizado el sumatorio del valor de las mismas, para obtener así una salida. Las entradas se corresponden con los datos de entrada si es la primera capa, o con las salidas de las demás neuronas si son las capas ocultas o final. Además existe una entrada adicional llamada umbral, bias o sesgo, que proporciona un grado de libertad adicional al modelo. Los pesos son valores reales que multiplican a las entradas. En un principio los pesos son inicializados aleatoriamente (luego hay una componente aleatoria asociada a cada red neuronal)(suelen inicializarse con valores pequeños), y se actualizan mediante algoritmos de entrenamiento sobre los datos observados que minimizan una función de coste, por lo que van a representar el conocimiento de la red. La función de activación es la característica principal de las neuronas ya que define la salida de la neurona y por tanto, su forma de comportarse (su estado de activación). Su labor consiste en mapear los valores de entrada en valores de salida. Estas funciones pueden ser funciones lineales, su uso es limitado ya que las salidas son proporcionales a las entradas; funciones de umbral, en las cuales la salida es un valor discreto (típicamente binario) que depende de si la activación total supera o no un determinado valor de umbral; y funciones no lineales, que son las ms comunmente empleadas al no ser proporcionales a la entrada. Entre las funciones de activación más empleadas encontramos las funciones:
 - Identidad o función de activación lineal: Función lineal acotada entre + infinito y - infinito.
 - Escalón unitario: Esta función de umbral es muy útil en clasificadores.
 - Sigmoide (o logística): Esta función no lineal mapea los valores entre 0 y 1. Es una de las más usada para las redes neuronales.
@@ -330,7 +330,9 @@ Luego cada neurona va a recibir un conjunto de entradas ponderadas por un peso e
 
 *IMAGEN*
 
-Por otro lado, las propiedades deseables de una función de activación son:
+En cuanto al entrenamiento de la red, 
+
+Por otro lado, se tiene que las propiedades deseables de una función de activación son:
 - No linealidad: El propósito de la función de activación es introducir no linealidad en la red, para poder modelar la variable de respuesta mediante una combinación no lineal con sus variables explicativas.
 - Continuamente diferenciable: Esta propiedad es necesaria para habilitar métodos de optimización basados en el descenso del gradiente.
 
@@ -339,16 +341,24 @@ Por otro lado, las propiedades deseables de una función de activación son:
 
 
 
-Antes de aplicar la función de activación, se puede añadir cierto ruido a las entradas. ¿bias?
-un parametro que proporciona un grado de libertad adicional al modelo
-La función de propagación más común consiste en el sumatorio de todas las entradas multiplicadas por los pesos de las conexiones, más un valor de sesgo o “bias”.
+
+Epocas son las iteraciones del entrenamiento, en la que se usan los valores de entrenamiento, se miran las salidas y se reajustan los pesos sinápticos por backpropagation (retropropagación). Las épocas buscan que la red aprenda los valores de entrenamiento y la salida sea la deseada, disminuyendo el error, el error se puede calcular mediante el error cuadrático medio. Luego se valida.
+
+El entrenamiento se realiza mediante el descenso del gradiente, que actualiza los pesos sinápticos de la red a partir del error cometido por la red en cada iteración.
+
+El número de épocas lo definimos nosotros. Si elegimos pocas iteraciones el gradiente puede que no alcance el mínimo. Pero si se elige un número elevado, el algoritmo puede sobreajustar la red. (El ajuste de iteraciones y capas se puede hacer por prueba y error (ver web hombre que lo hace muy bien))
+
+
+Retropropagación modifica los pesos iniciales de la neurona. Esa modificación depende del resultado obtenido (y su diferencia con el valor esperado) y de los pesos anteriores. Con la idea de corregir ese error con la modificación del peso. Desde la última capa a las iniciales.
+
+
 
 
 
 
 ¿qué es función de activación y tipos? 
-¿umbral?¿bias?
-¿algoritmos entrenamiento?
+¿umbral?¿bias?¿cuál es su papel?
+¿algoritmos entrenamiento de la red?
 ¿función de coste?
 
 Para aquellas redes que usen funciones de activación como por ejemplo la sigmoide, una **normalización** de los datos es frecuentemente de ayuda, ya que si no se realiza la normalización los datos de entrada tendrán un efecto adicional sobre la neurona, dando lugar a decisiones incorrectas. Entre los tipos de normalización más comunes se pueden encontrar:
