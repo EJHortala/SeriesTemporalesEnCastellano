@@ -309,28 +309,46 @@ ________________________________________________________________________
 
 Hasta ahora, los enfoques de análisis de series temporales se han llevado a cabo desde un punto de vista lineal, ya que con los métodos vistos anteriormente se obtienen resultados satisfactorios en series de tiempo lineales, pero al utilizarlos en series no lineales, presentan limitaciones ya que no son capaces de capturar las relaciones no lineales de los datos. Así entran en juego los métodos capaces de capturar las relaciones lineales y no lineales entre los datos, como son las **redes neuronales**.
 
-Los métodos de predicción basados en redes neuronales artificiales están basados en modelos matemáticos simples del cerebro. Una red neuronal puede ser vista como una red de neuronas organizadas en capas, en la que los predictores (o entradas) forman la capa más baja y las predicciones (salidas) forman la capa más alta. Entre ambas capas pueden existir capas intermedias con neuronas ocultas. Esta capa intermedia oculta es la que permite una relación no linear entre las entradas y las salidas permitiendo al modelo más grados de libertad (ya que se emplean funciones de activación no lineales, como la función sigmoide)(si solo se tuvieran la capa de entrada y salida sería una regresión lineal (modelo más simple)). Una neurona artificial consta de los siguientes elementos:
+Los métodos de predicción basados en redes neuronales artificiales están basados en modelos matemáticos simples del cerebro. Una red neuronal puede ser vista como una red de neuronas organizadas en capas, en la que los predictores (o entradas) forman la capa más baja y las predicciones (salidas) forman la capa más alta. Entre ambas capas pueden existir capas intermedias con neuronas ocultas. Esta capa intermedia oculta es la que permite una relación no linear entre las entradas y las salidas permitiendo al modelo más grados de libertad (ya que se emplean funciones de activación no lineales)(si solo se tuvieran la capa de entrada y salida sería una regresión lineal (modelo más simple)). Una neurona artificial consta de los siguientes elementos:
 
-- Un conjunto de entradas.
-- Un conjunto de pesos sinápticos, correspondientes a cada entrada.
-- Una función de agregación, Σ.
-- Una función de activación (de transferencia), f.
+- Un conjunto de entradas, x.
+- Un conjunto de pesos sinápticos (o conexiones), correspondientes a cada entrada, w.
+- Una función de agregación (o de red, o de propagación), Σ.
+- Una función de activación (o de transferencia), f.
 - Un conjunto de salidas.
 
 ![STexample](./images/ann.png)
 
-Luego cada neurona va a recibir un conjunto de entradas ponderadas por un peso específico, a las que le aplica una función de activación una vez realizado el sumatorio del valor de las mismas, para obtener así una salida. Los pesos son valores reales que multiplican a las entradas. En un principio los pesos son inicializados aleatoriamente (luego hay una componente aleatoria asociada a cada red neuronal), pero estos pesos se actualizan mediante algoritmos de entrenamiento sobre los datos observados que minimizan una función de coste, por lo que van a representar el conocimiento de la red. 
-La función de activación es la característica principal de las neuronas ya que define la salida de la neurona y por tanto, su forma de comportarse. Su labor consiste en mapear los valores de entrada en valores de salida.
+Luego cada neurona va a recibir un conjunto de entradas ponderadas por un peso específico, a las que le aplica una función de activación una vez realizado el sumatorio del valor de las mismas, para obtener así una salida. Los pesos son valores reales que multiplican a las entradas. En un principio los pesos son inicializados aleatoriamente (luego hay una componente aleatoria asociada a cada red neuronal), pero estos pesos se actualizan mediante algoritmos de entrenamiento sobre los datos observados que minimizan una función de coste, por lo que van a representar el conocimiento de la red. La función de activación es la característica principal de las neuronas ya que define la salida de la neurona y por tanto, su forma de comportarse (su estado de activación). Su labor consiste en mapear los valores de entrada en valores de salida. Estas funciones pueden ser funciones lineales (su uso es limitado), en las que la salida es proporcional a la entrada; funciones de umbral, en las cuales la salida es un valor discreto (típicamente binario 0/1, se activa la neurona o no según se supere un umbral) que depende de si la activación total supera o no un determinado valor de umbral; y funciones no lineales, no proporcionales a la entrada (las comunmente empleadas). Entre las ms empleadas encontramos:
+- Identidad o función de activación lineal: Función lineal acotada entre + infinito y - infinito.
+- Escalón unitario: Esta función de umbral es muy útil en clasificadores.
+- Sigmoide (o logística): Esta función no lineal mapea los valores entre 0 y 1. Es una de las más usada para las redes neuronales.
+- Tangente: Similar a la sigmoide pero el mapeo es entre valores -1 y 1.
+- ReLu (Rectifier Linear Unit): 
+- Leaky ReLu: 
+- Softmax:
+
+*IMAGEN*
+
+Por otro lado, las propiedades deseables de una función de activación son:
+- No linealidad: El propósito de la función de activación es introducir no linealidad en la red, para poder modelar la variable de respuesta mediante una combinación no lineal con sus variables explicativas.
+- Continuamente diferenciable: Esta propiedad es necesaria para habilitar métodos de optimización basados en el descenso del gradiente.
 
 
-En su forma simplificada, esta función es binaria, esto es, se activa la neurona o no. Una función rampa también puede ser usada para reflejar el incremento del potencial de activación que ocurre cuando la entrada se incrementa.  Esta función de activación es lineal, y por consiguiente tiene los mismos problemas que la función binaria. Los problemas mencionados anteriormente, pueden ser manejados usando una función de activación sigmoidal. La función de tangente hiperbólica puede también ser cualquier función sigmoidal.
 
 
 
-¿qué es función de activación y tipos?
 
-¿algoritmos entrenamiento?
+Antes de aplicar la función de activación, se puede añadir cierto ruido a las entradas. ¿bias?
+un parametro que proporciona un grado de libertad adicional al modelo
+La función de propagación más común consiste en el sumatorio de todas las entradas multiplicadas por los pesos de las conexiones, más un valor de sesgo o “bias”.
+
+
+
+
+¿qué es función de activación y tipos? 
 ¿umbral?¿bias?
+¿algoritmos entrenamiento?
 ¿función de coste?
 
 Para aquellas redes que usen funciones de activación como por ejemplo la sigmoide, una **normalización** de los datos es frecuentemente de ayuda, ya que si no se realiza la normalización los datos de entrada tendrán un efecto adicional sobre la neurona, dando lugar a decisiones incorrectas. Entre los tipos de normalización más comunes se pueden encontrar:
