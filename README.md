@@ -319,7 +319,7 @@ Los métodos de predicción basados en redes neuronales artificiales están basa
 
 ![STexample](./images/ann.png)
 
-En una red neuronal, cada neurona va a recibir un conjunto de entradas ponderadas por un peso específico, a las que le aplica una función de activación una vez realizado el sumatorio del valor de las mismas, para obtener así una salida. Las entradas se corresponden con los datos de entrada si es la primera capa, o con las salidas de las demás neuronas si son las capas ocultas o final. Además existe una entrada adicional llamada umbral, bias o sesgo, que proporciona un grado de libertad adicional al modelo. Los pesos son valores reales que multiplican a las entradas. En un principio los pesos son inicializados aleatoriamente (luego hay una componente aleatoria asociada a cada red neuronal)(suelen inicializarse con valores pequeños), y se actualizan mediante algoritmos de entrenamiento sobre los datos observados que minimizan una función de coste, por lo que van a representar el conocimiento de la red. La función de activación es la característica principal de las neuronas ya que define la salida de la neurona y por tanto, su forma de comportarse (su estado de activación). Su labor consiste en mapear los valores de entrada en valores de salida. Estas funciones pueden ser funciones lineales, su uso es limitado ya que las salidas son proporcionales a las entradas; funciones de umbral, en las cuales la salida es un valor discreto (típicamente binario) que depende de si la activación total supera o no un determinado valor de umbral; y funciones no lineales, que son las ms comunmente empleadas al no ser proporcionales a la entrada. Entre las funciones de activación más empleadas encontramos las funciones:
+En una red neuronal, cada neurona va a recibir un conjunto de entradas ponderadas por un peso específico, a las que le aplica una función de activación una vez realizado el sumatorio del valor de las mismas, para obtener así una salida. Las entradas se corresponden con los datos de entrada si es la primera capa, o con las salidas de las demás neuronas si son las capas ocultas o final. Además existe una entrada adicional llamada umbral, bias o sesgo, que proporciona un grado de libertad adicional al modelo. Los pesos son valores reales que multiplican a las entradas. En un principio los pesos son inicializados aleatoriamente (luego hay una componente aleatoria asociada a cada red neuronal)(suelen inicializarse con valores pequeños)(tambin pueden ser inicializados), y se actualizan mediante algoritmos de entrenamiento sobre los datos observados que minimizan una función de coste, por lo que van a representar el conocimiento de la red. La función de activación es la característica principal de las neuronas ya que define la salida de la neurona y por tanto, su forma de comportarse (su nivel de activación). Su labor consiste en mapear los valores de entrada en valores de salida (la elección de la función de activación depende de la forma en que se desee que sean representados los datos  de salida). Estas funciones pueden ser funciones lineales, su uso es limitado ya que las salidas son proporcionales a las entradas; funciones de umbral, en las cuales la salida es un valor discreto (típicamente binario) que depende de si la activación total supera o no un determinado valor de umbral; y funciones no lineales, que son las ms comunmente empleadas al no ser proporcionales a la entrada. Entre las funciones de activación más empleadas encontramos las funciones:
 - Identidad o función de activación lineal: Función lineal acotada entre + infinito y - infinito.
 - Escalón unitario: Esta función de umbral es muy útil en clasificadores.
 - Sigmoide (o logística): Esta función no lineal mapea los valores entre 0 y 1. Es una de las más usada para las redes neuronales.
@@ -330,36 +330,18 @@ En una red neuronal, cada neurona va a recibir un conjunto de entradas ponderada
 
 *IMAGEN*
 
-En cuanto al entrenamiento de la red, 
-
 Por otro lado, se tiene que las propiedades deseables de una función de activación son:
 - No linealidad: El propósito de la función de activación es introducir no linealidad en la red, para poder modelar la variable de respuesta mediante una combinación no lineal con sus variables explicativas.
 - Continuamente diferenciable: Esta propiedad es necesaria para habilitar métodos de optimización basados en el descenso del gradiente.
 
+En cuanto al entrenamiento de la red, es el proceso mediante el cual una red neuronal modifica sus pesos en función de la salida obtenida a una determinada entrada y su valor esperado (aprendizaje supervisado), con la finalidad de que la red sea capaz de reproducir el comportamiento subyacente en los datos aportados (minimización de una función de coste o error). Esto se realiza durante un determinado número de iteraciones, llamadas épocas. El proceso de aprendizaje finaliza una vez alcanzado un criterio de parada, ya sea un determinado número de épocas o cuando los valores de los pesos dejan de cambiar, habiendo alcanzado un mínimo global o local. Los algoritmos de aprendizaje supervisado se pueden  dividir en dos tipos; corrección de error y gradiente. Dentro de los métodos de aprendizaje basados en el gradiente, el más empleado es:
+- Retropropagación (back-propagation): el algoritmo de back-propagation está basado en el descenso del gradiente. Este algoritmo consiste en usar en cada época los valores de entrenamiento para obtener una salida de la red, calcular el error cometido por la red con respecto al valor esperado (error cuadrático medio, MSE), y a partir del error modificar el vector de pesos iniciales en dirección opuesta al gradiente de la función error con la idea de corregir el desajuste de la red con la modificación de los pesos (calculando la variación de error al modificar cada uno de los parámetros de la red).
 
-
-
-
-
-
-Epocas son las iteraciones del entrenamiento, en la que se usan los valores de entrenamiento, se miran las salidas y se reajustan los pesos sinápticos por backpropagation (retropropagación). Las épocas buscan que la red aprenda los valores de entrenamiento y la salida sea la deseada, disminuyendo el error, el error se puede calcular mediante el error cuadrático medio. Luego se valida.
-
-El entrenamiento se realiza mediante el descenso del gradiente, que actualiza los pesos sinápticos de la red a partir del error cometido por la red en cada iteración.
-
-El número de épocas lo definimos nosotros. Si elegimos pocas iteraciones el gradiente puede que no alcance el mínimo. Pero si se elige un número elevado, el algoritmo puede sobreajustar la red. (El ajuste de iteraciones y capas se puede hacer por prueba y error (ver web hombre que lo hace muy bien))
-
-
-Retropropagación modifica los pesos iniciales de la neurona. Esa modificación depende del resultado obtenido (y su diferencia con el valor esperado) y de los pesos anteriores. Con la idea de corregir ese error con la modificación del peso. Desde la última capa a las iniciales.
-
-
-
-
-
+En cuanto a aué tamaño de la red usar, qué función de activación, o qué número de iteraciones establecer, no hay un patrón a seguir sino que depende de cada problema. Aunq
 
 ¿qué es función de activación y tipos? 
 ¿umbral?¿bias?¿cuál es su papel?
-¿algoritmos entrenamiento de la red?
-¿función de coste?
+¿algoritmos entrenamiento de la red? ¿función de coste? ¿backpropagation?
 
 Para aquellas redes que usen funciones de activación como por ejemplo la sigmoide, una **normalización** de los datos es frecuentemente de ayuda, ya que si no se realiza la normalización los datos de entrada tendrán un efecto adicional sobre la neurona, dando lugar a decisiones incorrectas. Entre los tipos de normalización más comunes se pueden encontrar:
 - min-max: reescala los valores de los datos entre el rango 0 y 1 (-1 y 1), correspondiéndose el valor mayor de los datos a 1, y el menor a 0.
