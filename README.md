@@ -319,16 +319,16 @@ Los métodos de predicción basados en redes neuronales artificiales están basa
 
 ![STexample](./images/ann.png)
 
-En una red neuronal, cada neurona va a recibir un conjunto de entradas ponderadas por un peso específico, a las que le aplica una función de activación una vez realizado el sumatorio del valor de las mismas, para obtener así una salida. Las entradas se corresponden con los datos de entrada si es la primera capa, o con las salidas de las demás neuronas si son las capas ocultas o final. Además existe una entrada adicional llamada umbral, bias o sesgo, que proporciona un grado de libertad adicional al modelo. Los pesos son valores reales que multiplican a las entradas. En un principio los pesos son inicializados aleatoriamente (luego hay una componente aleatoria asociada a cada red neuronal)(suelen inicializarse con valores pequeños)(tambin pueden ser inicializados), y se actualizan mediante algoritmos de entrenamiento sobre los datos observados que minimizan una función de coste, por lo que van a representar el conocimiento de la red. La función de activación es la característica principal de las neuronas ya que define la salida de la neurona y por tanto, su forma de comportarse (su nivel de activación). Su labor consiste en mapear los valores de entrada en valores de salida (la elección de la función de activación depende de la forma en que se desee que sean representados los datos  de salida). Estas funciones pueden ser funciones lineales, su uso es limitado ya que las salidas son proporcionales a las entradas; funciones de umbral, en las cuales la salida es un valor discreto (típicamente binario) que depende de si la activación total supera o no un determinado valor de umbral; y funciones no lineales, que son las ms comunmente empleadas al no ser proporcionales a la entrada. Entre las funciones de activación más empleadas encontramos las funciones:
+En una red neuronal, cada neurona va a recibir un conjunto de entradas ponderadas por un peso específico, a las que le aplica una función de activación una vez realizado el sumatorio del valor de las mismas, para obtener así una salida. Las entradas se corresponden con los datos de entrada si es la primera capa, o con las salidas de las demás neuronas si son las capas ocultas o final. Además existe una entrada adicional llamada umbral, bias o sesgo, que proporciona un grado de libertad adicional al modelo. Los pesos son valores reales que multiplican a las entradas. En un principio los pesos son inicializados aleatoriamente (luego hay una componente aleatoria asociada a cada red neuronal)(suelen inicializarse con valores pequeños)(tambin pueden ser inicializados), y se actualizan mediante algoritmos de entrenamiento sobre los datos observados que minimizan una función de coste, por lo que van a representar el conocimiento de la red. La función de activación es la característica principal de las neuronas ya que define la salida de la neurona y por tanto, su forma de comportarse (su nivel de activación)(la capa de entrada son simplemente los valores que introducimos en la red neuronal, luego no tiene sentido que las neuronas de entrada tengan función de activación. Sí en las capas ocultas y de salida, aunque dependiendo de la labor de la red neuronal la capa de salida puede usar una función distinta (sigmoide (binaria) o softmax (varias clases) para clasificación o lineal (cualquier valor) para regresión)). Su labor consiste en mapear los valores de entrada en valores de salida (la elección de la función de activación depende de la forma en que se desee que sean representados los datos  de salida). Estas funciones pueden ser funciones lineales, su uso es limitado ya que las salidas son proporcionales a las entradas; funciones de umbral, en las cuales la salida es un valor discreto (típicamente binario) que depende de si la activación total supera o no un determinado valor de umbral; y funciones no lineales, que son las ms comunmente empleadas al no ser proporcionales a la entrada. Entre las funciones de activación más empleadas encontramos las funciones:
 - Identidad o función de activación lineal: Función lineal acotada entre + infinito y - infinito.
 - Escalón unitario: Esta función de umbral es muy útil en clasificadores.
 - Sigmoide (o logística): Esta función no lineal mapea los valores entre 0 y 1. Es una de las más usada para las redes neuronales.
 - Tangente: Similar a la sigmoide pero el mapeo es entre valores -1 y 1.
-- ReLu (Rectifier Linear Unit): 
-- Leaky ReLu: 
-- Softmax:
+- ReLu (Rectifier Linear Unit): Es una función no lineal que tiene un rango entre 0 e infinito. Esto da lugar a una activación más escasa o difícil las neuronas (ya que no activará las que den valores negativos), lo que se presenta beneficioso a medida que la red es más grande ya que la red será más ligera en comparación con aquellas que usan las funciones tangente o sigmoide en las que prácticamente todas las neuronas se activan. Luego ReLu es menos costoso desde el punto de vista computacional que tangente y sigmoide al implicar operaciones matemáticas más simples. Este es un buen punto a considerar cuando estamos diseñando redes neurales profundas.
+- Leaky ReLu: Variante de la función ReLu, en la que la diferencia es que la parte negativa no es completamente 0, sino que es un valor muy cercano a 0, lo que evita que ciertas neuronas nunca se activen y por lo tanto nunca se modifiquen sus pesos
 
-*IMAGEN*
+
+![STexample](https://qph.ec.quoracdn.net/main-qimg-c30cd7a69de020b4f8581db3ba8f8508)
 
 Por otro lado, se tiene que las propiedades deseables de una función de activación son:
 - No linealidad: El propósito de la función de activación es introducir no linealidad en la red, para poder modelar la variable de respuesta mediante una combinación no lineal con sus variables explicativas.
@@ -337,9 +337,9 @@ Por otro lado, se tiene que las propiedades deseables de una función de activac
 En cuanto al entrenamiento de la red, es el proceso mediante el cual una red neuronal modifica sus pesos en función de la salida obtenida a una determinada entrada y su valor esperado (aprendizaje supervisado), con la finalidad de que la red sea capaz de reproducir el comportamiento subyacente en los datos aportados (minimización de una función de coste o error). Esto se realiza durante un determinado número de iteraciones, llamadas épocas. El proceso de aprendizaje finaliza una vez alcanzado un criterio de parada, ya sea un determinado número de épocas o cuando los valores de los pesos dejan de cambiar, habiendo alcanzado un mínimo global o local. Los algoritmos de aprendizaje supervisado se pueden  dividir en dos tipos; corrección de error y gradiente. Dentro de los métodos de aprendizaje basados en el gradiente, el más empleado es:
 - Retropropagación (back-propagation): el algoritmo de back-propagation está basado en el descenso del gradiente. Este algoritmo consiste en usar en cada época los valores de entrenamiento para obtener una salida de la red, calcular el error cometido por la red con respecto al valor esperado (error cuadrático medio, MSE), y a partir del error modificar el vector de pesos iniciales en dirección opuesta al gradiente de la función error con la idea de corregir el desajuste de la red con la modificación de los pesos (calculando la variación de error al modificar cada uno de los parámetros de la red).
 
-En cuanto a aué tamaño de la red usar, qué función de activación, o qué número de iteraciones establecer, no hay un patrón a seguir sino que depende de cada problema. Aunq
+En cuanto a qué tamaño de la red usar, qué función de activación, o qué número de iteraciones establecer, no hay un patrón a seguir sino que depende de cada problema. Una manera de tratar con esto es probar diferentes parámetrizaciones y ver la evolución del error.
 
-¿qué es función de activación y tipos? 
+¿qué es función de activación y tipos? ¿son solo para capas ocultas?
 ¿umbral?¿bias?¿cuál es su papel?
 ¿algoritmos entrenamiento de la red? ¿función de coste? ¿backpropagation?
 
@@ -435,6 +435,9 @@ The best function for hidden layers is thus ReLu.
 
 outputo layer -> Regression: linear (because values are unbounded)
 Classification: softmax (simple sigmoid works too but softmax works better)
+- Softmax: La función de Softmax se utiliza para impartir probabilidades cuando se tiene más de una clase de salida. Es útil para encontrar la ocurrencia más probable de la clase de salida con respecto a otras clases (bajo el supuesto de que las clases son mutuamente excluyentes). Se utiliza a menudo en la capa final de un clasificador basado en redes neuronales.
+No se aclaran muy bien si es una función de activación o no, pero parece que se aplica después de la función de activación
+
 
 ¿activation funtion in hidden and output layer?
 
@@ -1176,6 +1179,7 @@ ________________________________________________________________________
 - Methods for the estimation of missing values in time series http://ro.ecu.edu.au/cgi/viewcontent.cgi?article=1063&context=theses <br>
 - Comparison of different Methods for Univariate Time Series Imputation in R: https://arxiv.org/ftp/arxiv/papers/1510/1510.03924.pdf <br>
 - A blog by Rob J Hyndman: http://robjhyndman.com/hyndsight/ <br>
+- Understanding Activation Functions in Neural Networks https://medium.com/the-theory-of-everything/understanding-activation-functions-in-neural-networks-9491262884e0 <br>
 - Redes de neuronas recurrentes http://eva.evannai.inf.uc3m.es/et/docencia/doctorado/cib/documentacion/NNRecurrentes.pdf <br>
 - A Beginner’s Guide to Recurrent Networks and LSTMs: https://deeplearning4j.org/lstm <br>
 - ¿Qué es y cómo funciona “Deep Learning”? https://rubenlopezg.wordpress.com/2014/05/07/que-es-y-como-funciona-deep-learning/ <br>
