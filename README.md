@@ -435,8 +435,8 @@ The best function for hidden layers is thus ReLu.
 
 outputo layer -> Regression: linear (because values are unbounded)
 Classification: softmax (simple sigmoid works too but softmax works better)
-- Softmax: La función de Softmax se utiliza para impartir probabilidades cuando se tiene más de una clase de salida. Es útil para encontrar la ocurrencia más probable de la clase de salida con respecto a otras clases (bajo el supuesto de que las clases son mutuamente excluyentes). Se utiliza a menudo en la capa final de un clasificador basado en redes neuronales.
-No se aclaran muy bien si es una función de activación o no, pero parece que se aplica después de la función de activación
+- Softmax: La función de Softmax se utiliza para impartir probabilidades cuando se tiene más de una clase de salida. Es útil para encontrar la ocurrencia más probable de la clase de salida con respecto a otras clases (bajo el supuesto de que las clases son mutuamente excluyentes)(la suma de las salidas de la función es 1). Se utiliza a menudo en la capa final de un clasificador basado en redes neuronales (pero no como una función de activación (aunque esto no está muy claro)).
+
 
 
 ¿activation funtion in hidden and output layer?
