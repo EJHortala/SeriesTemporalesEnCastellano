@@ -339,10 +339,6 @@ En cuanto al entrenamiento de la red, es el proceso mediante el cual una red neu
 
 En cuanto a qué tamaño de la red usar, qué función de activación, o qué número de iteraciones establecer, no hay un patrón a seguir sino que depende de cada problema. Una manera de tratar con esto es probar diferentes parámetrizaciones y ver la evolución del error.
 
-¿qué es función de activación y tipos? ¿son solo para capas ocultas?
-¿umbral?¿bias?¿cuál es su papel?
-¿algoritmos entrenamiento de la red? ¿función de coste? ¿backpropagation?
-
 Para aquellas redes que usen funciones de activación como por ejemplo la sigmoide, una **normalización** de los datos es frecuentemente de ayuda, ya que si no se realiza la normalización los datos de entrada tendrán un efecto adicional sobre la neurona, dando lugar a decisiones incorrectas. Entre los tipos de normalización más comunes se pueden encontrar:
 - min-max: reescala los valores de los datos entre el rango 0 y 1 (-1 y 1), correspondiéndose el valor mayor de los datos a 1, y el menor a 0.
 - z-score: los datos son escalados para tener una media de 0 y una desviación estándar de 1 (μ = 0 y σ = 1), se obtiene restando a cada elemento la media de la población y dividiendolo entre la desviación estándar de la población, y cada valor representa el número de desviaciones estándar que está por encima o por debajo de la media.
