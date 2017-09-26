@@ -394,8 +394,50 @@ Así pues una red neuronal profunda es una red neuronal artificial con una arqui
 
 	Este procedimiento puede volver a ser visto como un procedimiento de dos pasos, un primero que lleva a cabo un aprendizaje de características de los datos de entrada, y un segundo paso añadido para la predicción. Es muy similar a los autoencoders apilados, pero en este caso los autoencoders han sido reemplazados por MBR, luego en una red de creencia profunda la capa de entrada de la primera MBR es la capa de entrada para toda la red, la capa oculta de la primera MBR es la capa de entrada de la segunda MBR, y así sucesivamente. Cada MBR se pre-entrena de manera greedy layer-wise una a una pero esta vez en vez de con back-propagation, se realiza con el algoritmo de divergencia contrastiva. Después del pre-entrenamiento, y al igual que en los autoencoders apilados, los pesos están inicializados y la red se puede ampliar mediante la conexión de una o más capas completamente conectadas a la capa oculta final MBR, formando un perceptrón de múltiples capas que puede ser afinado mediante backpropagation.
 	
-- LSTM (Recurrent neural networks):
+- LSTM (Long Short Term Memory): Son un tipo especial de red neuronal recurrente capaces de aprender dependencias temporales largas. Mantienen la estructura de cadena de las redes recurrentes (la salida de una neurona en una misma capa es entrada de otra) pero la estructura de la neurona es diferente.
 
+
+
+---
+
+Los LSTM ayudan a conservar el error que se puede propagar a través del tiempo y las capas. Al mantener un error más constante, permiten que las redes recurrentes continúen aprendiendo durante muchos pasos de tiempo (más de 1000), abriendo así un canal para vincular causas y efectos de forma remota.
+
+Las neuronas de las LSTMs contienen información fuera del flujo normal de la red recurrente en una celda cerrada. Esta información se puede almacenar, escribir o leer en una celda. La celda toma decisiones sobre qué almacenar, y cuándo permitir lecturas, escrituras y borrados a través de puertas que se abren y cierran. Estas puertas son analógicas, implementadas con la multiplicación de elementos por los sigmoides (están todos en el rango de 0-1). 
+
+Esas puertas actúan sobre las señales que reciben, y similares a los nodos de la red neuronal, bloquean o transmiten información basada en su fuerza e importación, que filtran con sus propios conjuntos de pesos. Estos pesos, como los pesos que modulan la entrada y los estados ocultos, se ajustan a través del proceso de aprendizaje de las redes recurrentes. Es decir, las celdas aprenden cuándo permitir que los datos entren, salgan o se eliminen a través del proceso iterativo de hacer conjeturas, error de retropropagación y ajustar pesos a través del descenso de gradiente.
+
+--- 
+
+El LSTM tiene la capacidad de eliminar o agregar información al estado de la celda, cuidadosamente regulada por estructuras llamadas puertas.
+
+Las puertas son una forma de opcionalmente dejar pasar la información. Se componen de una capa de red neuronal sigmoide y una operación de multiplicación puntual.
+
+La capa sigmóide da salida a números entre cero y uno, describiendo cuánto de cada componente debe dejarse pasar. Un valor de cero significa "no dejar nada pasar", mientras que el valor de uno significa "¡deja todo pasar!"
+
+Un LSTM tiene tres de estas puertas, para proteger y controlar el estado de la celda.
+
+--- http://www.dlsi.ua.es/~japerez/pub/pdf/tesi2002-slide.pdf
+
+La celda  de  memoria es  el  componente  b ́asico  de  una  red  LSTM:
+una unidad lineal autorrecurrente ( carrusel ) rodeada de una serie de compuertas
+
+La  unidad  lineal  puede  almacenar  informaci ́on  durante  largos  perio-
+dos de tiempo:  el problema del gradiente evanescente se desvanece
+
+Las celdas de memoria forman la capa oculta de una red LSTM; las
+neuronas de salida son convencionales
+
+--- http://www.dlsi.ua.es/~japerez/pub/pdf/tesi2002.pdf
+
+El componente b ́asico del modelo LSTM es el bloque de memoria, que contiene una o más celdas de memoria, una compuerta de entrada y una compuerta de salida . Las compuertas son unidades multiplicativas con activaci ́on continua (normalmente dentro
+del intervalo unidad) y son compartidas por todas las celdas que pertenecen a un mismo bloque de memoria. Cada celda contiene una unidad lineal con una conexi ́on recurrente local llamada carrusel de error constante
+(CEC); la activaci ́on del CEC se conoce como el estado de la celda
+
+pag. 41...
+ 
+--- https://www.apsl.net/blog/2017/06/14/analisis-de-series-temporales-usando-redes-neuronales-recurrentes/
+
+A diferencia de las redes neuronales tradicionales, en lugar de poseer neuronas de manera clásica, las redes LSTM tienen como neuronas bloques de memoria que están conectados a través de capas. Estos bloques de memoria facilitan la tarea de recordar valores para largos o cortos períodos de tiempo, por lo tanto, el valor almacenado no es reemplazado (al menos a corto plazo) de forma iterativa en el tiempo, y el término de gradiente no tiende a desaparecer cuando se aplica la retro-propagación (back-propagation método de aprendizaje) durante el proceso de entrenamiento, tal y como acontece en e uso de las redes neuronales clásicas.
 
 
 
@@ -1177,6 +1219,7 @@ ________________________________________________________________________
 - A blog by Rob J Hyndman: http://robjhyndman.com/hyndsight/ <br>
 - Understanding Activation Functions in Neural Networks https://medium.com/the-theory-of-everything/understanding-activation-functions-in-neural-networks-9491262884e0 <br>
 - Redes de neuronas recurrentes http://eva.evannai.inf.uc3m.es/et/docencia/doctorado/cib/documentacion/NNRecurrentes.pdf <br>
+- Understanding LSTM Networks http://colah.github.io/posts/2015-08-Understanding-LSTMs/ <br>
 - A Beginner’s Guide to Recurrent Networks and LSTMs: https://deeplearning4j.org/lstm <br>
 - ¿Qué es y cómo funciona “Deep Learning”? https://rubenlopezg.wordpress.com/2014/05/07/que-es-y-como-funciona-deep-learning/ <br>
 - Multivariate time series models: http://lipas.uwasa.fi/~bepa/Multivariate.pdf <br>
