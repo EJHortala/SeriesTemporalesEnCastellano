@@ -375,7 +375,7 @@ En construcción...
 
 La estructura anterior de las redes neuronales artificiales (red neuronal poco profunda, superficial o shallow), se ha mantenido vigente durante bastante tiempo debido a los problemas de entrenamiento que se presentaban en las redes neuronales a medida que se ampliaba y profundizaba su estructura. El principal problema es conocido como el problema de la desaparición del gradiente (vanishing gradient problem)(entre otros problemas como capacidad computacional, etc.), dicho problema reside en los algoritmos de entrenamiento (propagación hacia atrás (backpropagation)) debido a que el error se va diluyendo de forma exponencial a medida que atraviesa capas en su camino hasta el principio de la red, lo que es un problema porque en una red muy profunda (con muchas capas ocultas) sólo las últimas capas se entrenan, mientras que las primeras apenas sufren cambios. Lo que ofrece un rendimiento muy bajo con redes neuronales profundas ya que al tener un gran conjunto de pesos iniciales acaba estancándose en algún mínimo local. De echo, los experimentos han demostrado que las redes neuronales profundas con pesos iniciales inicialidos de manera aleatoria, obtienen peores resultados que las redes neuronales con solo una o dos capas ocultas.
 
-Debido a esta dificultad de entrenar estas arquitecturas profundas de una manera eficiente, las redes neuronales profundas no han tenido relevancia hasta la aparición de algunas técnicas que superan las dificultades de entrenamiento de una estructura profunda, como son los métodos de aprendizaje greedy layer-wise, que sí pueden realizar el entrenamiento de manera adecuada ya que su idea clave es pre-entrenar la red capa por capa de una manera ascendente, de forma que una vez realizado este proceso de pre-entrenamiento, el algoritmo de back-propagation sí puede ser usado para encontrar los parámetros óptimos de la red completa de una manera descendente. Esto ha dado lugar a una mejora significativa de los resultados de las redes neuronales cuando se **pre-entrena** la red con algoritmos de aprendizaje no supervisados. Además, ha dado lugar a que se haya convertido en una técnica muy habitual en Deep Learning entrenar en primer lugar de manera no supervisada greedy layer-wise, y continuar con un entrenamiento supervisado, es decir, el entrenamiento supervisado, en lugar de empezar con pesos al azar, empieza con pesos útiles, especialmente para las primeras capas.
+Debido a esta dificultad de entrenar estas arquitecturas profundas de una manera eficiente, las redes neuronales profundas no han tenido relevancia hasta la aparición de algunas técnicas que superan las dificultades de entrenamiento de una estructura profunda, como son los métodos de aprendizaje greedy layer-wise, que sí pueden realizar el entrenamiento de manera adecuada ya que su idea clave es pre-entrenar la red capa por capa de una manera ascendente, de forma que una vez realizado este proceso de pre-entrenamiento, el algoritmo de back-propagation sí puede ser usado para encontrar los parámetros óptimos de la red completa de una manera descendente. Esto ha dado lugar a una mejora significativa de los resultados de las redes neuronales cuando se **pre-entrena** la red con algoritmos de aprendizaje no supervisados. Además, ha dado lugar a que se haya convertido en una técnica muy habitual en Deep Learning entrenar en primer lugar de manera no supervisada greedy layer-wise, y continuar con un entrenamiento supervisado, es decir, el entrenamiento supervisado, en lugar de empezar con pesos al azar, empieza con pesos útiles, especialmente para las primeras capas (esta forma de proceder se suele emplear cuando la red neuronal está formada por autocodificadores o por redes de Bolzman).
 
 Un método alternativo al pre-entrenamiento consiste en entrenar la red neuronal profunda de una manera más simple, empleando como función de activación de las neuronas la función ReLu en lugar de la típica función sigmoide ¿resuelve problema backpropagation?.
 
@@ -398,7 +398,7 @@ Así pues una red neuronal profunda es una red neuronal artificial con una arqui
 
 
 
----
+--- LSTM --- LSTM --- LSTM --- LSTM --- LSTM --- LSTM --- 
 
 Los LSTM ayudan a conservar el error que se puede propagar a través del tiempo y las capas. Al mantener un error más constante, permiten que las redes recurrentes continúen aprendiendo durante muchos pasos de tiempo (más de 1000), abriendo así un canal para vincular causas y efectos de forma remota.
 
@@ -439,9 +439,80 @@ pag. 41...
 
 A diferencia de las redes neuronales tradicionales, en lugar de poseer neuronas de manera clásica, las redes LSTM tienen como neuronas bloques de memoria que están conectados a través de capas. Estos bloques de memoria facilitan la tarea de recordar valores para largos o cortos períodos de tiempo, por lo tanto, el valor almacenado no es reemplazado (al menos a corto plazo) de forma iterativa en el tiempo, y el término de gradiente no tiende a desaparecer cuando se aplica la retro-propagación (back-propagation método de aprendizaje) durante el proceso de entrenamiento, tal y como acontece en e uso de las redes neuronales clásicas.
 
+--- autoencoders --- autoencoders --- autoencoders --- autoencoders --- autoencoders
+
+Los autoencidens son aprendizaje no supervisado
+
+Se usan aprender patrones de los datos (bueno para imagenes)
+
+Sparse y denoising autoencoders
+
+bueno 6to benamoun
+
+--- DBN --- DBN --- DBN --- DBN --- DBN
+
+También es aprendizaje no supervisado
+
+Pre-training
+
+bueno 5to pdf benamoun
+
+--- cybenko 61
+
+They designed a memory cell using logistic and linear units with multiplicative interactions.
+Information gets into the cell whenever its “write” gate is on.
+•  The information stays in the cell so long as its “keep” gate is on.
+•  Information can be read from the cell by turning on its “read” gate.
+
+--- rnn --- rnn --- rnn --- rnn --- lstm --- lstm --- lstm --- lstm 
+
+Para tratar con el problema del descenso del gradiente, se usan LSTM o inicializacion inteligente (tecnicas de preentrenamiento)
+
+Extension of RNN that can deal with long-term temporal dependencies Mechanism that allows the networks to “remember” relevant information for a long period of time
+
+imagen 81 sperduti
+
+Exploits a linear memory cell (state) that integrates input information through time
+memory obtained by self-loop
+gradient not down-sized by Jacobian of sigmoidal function ⇒ no vanishing gradient
+3 gate units (with sigmoid: soft version of a 0/1 switch) control the information flow via
+multiplicative connections
+input gate “on”: let input to flow in the memory cell
+output gate “on”: let the current value stored in the memory cell to be read in output
+forget gate “off”: let the current value stored in the memory cell to be reset to 0
+
+Many variations of the Vanilla LSTM architecture have been studied, as
+No Input Gate (NIG)
+No Forget Gate (NFG)
+No Output Gate (NOG)
+No Input Activation Function (NIAF)
+No Output Activation Function (NOAF)
+No Peepholes (NP)
+However:
+Vanilla LSTM performs reasonably well in general and variations do not
+significantly improve the performance
+the forget gate is crucial for LSTM performance
+if the cell state is unbounded the output activation function is needed
+
+Is it possibile to simplify LSTM units ?
+Gated Recurrent Units (GRU) do that by using a single gating unit that simultaneously
+controls the forgetting factor and the decision to update the state unit
 
 
-**Última capa**
+smart inizialization in rnn
+
+pre-training should be not too computationally expensive, otherwise it may not be useful
+
+two different pre-training approaches based on linear models for RNNs
+HMM-based (Pasa et al., Neurocomputing, 2015)
+exploits a simpler, first-order HMM to generate an approximate
+distribution of the original dataset used to generate a smoothed
+dataset for pre-training
+Linear Autoencoder-based (Pasa & Sperduti, NIPS, 2014)
+encodes the input sequences and uses the obtained weights as
+initial weights for the input-to-hidden connections of a RNN
+
+--- Ultima capa --- Ultima capa --- Ultima capa --- Ultima capa --- Ultima capa --- 
 
 On a deep neural network of many layers, the final layer has a particular role. When dealing with labeled input, the output layer classifies each example, applying the most likely label. Each node on the output layer represents one label, and that node turns on or off according to the strength of the signal it receives from the previous layer’s input and parameters.
 
@@ -451,9 +522,8 @@ Softmax is a function used as the output layer of a neural network that classifi
 
 Then a supervised learner such as softmax or SVM/SVR can be added on top of DBN.
 
-***
 
-Loss Functions in DeepLearning
+--- Loss Functions in DeepLearning --- Loss Functions in DeepLearning--- Loss Functions in DeepLearning
 
 MSE: Mean Squared Error: Linear Regression
 EXPLL: Exponential log likelihood: Poisson Regression
@@ -464,12 +534,16 @@ SQUARED_LOSS: Squared Loss
 NEGATIVELOGLIKELIHOOD: Negative Log Likelihood
 
 
+La funcin de perdida (loss function) mide la compatibilidad entre el valor predicho y el valor real.
+
 ***
 
-FUNCIONES DE ACTIVACION
+--- FUNCIONES DE ACTIVACION --- FUNCIONES DE ACTIVACION --- FUNCIONES DE ACTIVACION --- FUNCIONES DE ACTIVACION
 
 Sigmoid and tanh should not be used as activation function for the hidden layer. This is because of the vanishing gradient problem, i.e., if your input is on a higher side (where sigmoid goes flat) then the gradient will be near zero.
 The best function for hidden layers is thus ReLu.
+
+ELU
 
 outputo layer -> Regression: linear (because values are unbounded)
 Classification: softmax (simple sigmoid works too but softmax works better)
