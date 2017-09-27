@@ -394,6 +394,8 @@ Así pues una red neuronal profunda es una red neuronal artificial con una arqui
 
 	Este procedimiento puede volver a ser visto como un procedimiento de dos pasos, un primero que lleva a cabo un aprendizaje de características de los datos de entrada, y un segundo paso añadido para la predicción. Es muy similar a los autoencoders apilados, pero en este caso los autoencoders han sido reemplazados por MBR, luego en una red de creencia profunda la capa de entrada de la primera MBR es la capa de entrada para toda la red, la capa oculta de la primera MBR es la capa de entrada de la segunda MBR, y así sucesivamente. Cada MBR se pre-entrena de manera greedy layer-wise una a una pero esta vez en vez de con back-propagation, se realiza con el algoritmo de divergencia contrastiva. Después del pre-entrenamiento, y al igual que en los autoencoders apilados, los pesos están inicializados y la red se puede ampliar mediante la conexión de una o más capas completamente conectadas a la capa oculta final MBR, formando un perceptrón de múltiples capas que puede ser afinado mediante backpropagation.
 	
+Luego se puede ver como es estos se emplea un aprendizaje no supervisado, y luego una capa última...
+	
 - LSTM (Long Short Term Memory): Son un tipo especial de red neuronal recurrente capaces de aprender dependencias temporales largas. Mantienen la estructura de cadena de las redes recurrentes (la salida de una neurona en una misma capa es entrada de otra) pero la estructura de la neurona es diferente.
 
 
@@ -449,9 +451,16 @@ Sparse y denoising autoencoders
 
 bueno 6to benamoun
 
+An autoencoder is an unsupervised network that aims to extract non-linear features for a data input. 
+
 --- DBN --- DBN --- DBN --- DBN --- DBN
 
-También es aprendizaje no supervisado
+También es aprendizaje no supervisado.
+
+Se entrenan las rbm sin eqtiquetas, de manera no supervisada,and then fine-tunes it via a way of supervised back-propagating error 
+
+Typical DBNs model topology, shown in Fig. 1, is composed of one layer of SOFTMAX and finite layers of Restricted Boltzmann Machines (RBMs)
+A SOFTMAX layer is added to the top of the associate memory layer to compute the probability distribution over defined labels of class targets to train the weights of the final layer.
 
 Pre-training
 
