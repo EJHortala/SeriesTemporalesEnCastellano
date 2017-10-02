@@ -394,27 +394,19 @@ Así pues una red neuronal profunda es una red neuronal artificial con una arqui
 
 Luego se puede ver como tanto el procedimiento de los autocodificadores apilados como de las redes de creencia profunda es el mismo, ya que se emplea un pre-entrenamiento no supervisado sobre las capas que forman los autocodificadores y los RBM, para finalmente realizar un entrenamiento supervisado mediante backpropagation sobre la red completa, incluyendo la capa final de predicción o clasificación. A la hora de apilar ambos procedimientos, su estructura es muy similar ya que la parte útil de los autoencoder es la capa oculta (el encoder), lo que hace que tenga la misma estructura que una DBN. La principal diferencia entre ambos es que un autocodificador sí está usando el decoder para ajustar la capa oculta, al ser proceso determinista que aprende una representación de las entradas empleando un error objetivo (por ejemplo mediante backpropagation), mientras que una RBM es un proceso estocástico que aprende una distribución probabilística (aproximando los pesos mediante el gradiente basado en log-likehood), además de que no es una red feed-forward.
 	
-- LSTM (Long Short Term Memory): Son un tipo especial de red neuronal recurrente capaces de aprender dependencias temporales largas. Mantienen la estructura de cadena de las redes recurrentes (la salida de una neurona en una misma capa es entrada de otra) pero la estructura de la neurona es diferente.
+- LSTM (Long Short Term Memory): Son un tipo especial de red neuronal recurrente capaces de aprender dependencias temporales largas, ya que conservan el error y además lo pueden propagar a través del tiempo y las capas. Las neuronas de las LSTMs contienen información fuera del flujo normal de la red recurrente en una celda cerrada. Esta información se puede almacenar, escribir o leer en una celda. La celda toma decisiones sobre qué almacenar, y cuándo permitir lecturas, escrituras y borrados a través de puertas que se abren y cierran. Estas puertas son analógicas, implementadas con la multiplicación de elementos por los sigmoides (están todos en el rango de 0-1). Las puertas actúan sobre las señales que reciben, y similares a los nodos de la red neuronal, bloquean o transmiten información basada en su fuerza e importación, que filtran con sus propios conjuntos de pesos. Estos pesos, como los pesos que modulan la entrada y los estados ocultos, se ajustan a través del proceso de aprendizaje de las redes recurrentes. Es decir, las celdas aprenden cuándo permitir que los datos entren, salgan o se eliminen a través del proceso iterativo de hacer conjeturas, error de retropropagación y ajustar pesos a través del descenso de gradiente. 
+
+El funcionamiento de un LSTM es el siguiente:
+
+	- El primer paso es decidir qué cantidad de información de la celda de estado se va a emplear, para ello se usa una  puerta llamada de olvido que mediante una función sigmoide ([0,1]) aplicada sobre la entrada y el valor anterior múltiplica a la celda de estado.
+	- El siguiente paso consiste en decidir qué nueva información se va a añadir a la celda de estado. Para ello se realiza una multiplicación entre dos valores a partir de los datos de entrada y los datos del paso anterior, el primero se obtiene mediante una puerta llamada de entrada con una función sigmoide que decide qué cantidad de información va a almacenarse en la celda, y el segundo a partir de una capa con una función tangente que genera un nuevo valor. El resultado de la multiplicación se añade a la celda de estado.
+	- El último paso consiste en decidir qué se va a generar como salida mediante la puerta llamada de salida. La salida se obtendrá mediante la multiplicación entre la aplicación de la función tangente al valor del estado de la celda y una cantidad de ese valor, para ello se emplea la función sigmoide sobre los valores de entrada y del paso anterior.
+
 
 
 
 --- LSTM --- LSTM --- LSTM --- LSTM --- LSTM --- LSTM --- 
 
-Los LSTM ayudan a conservar el error que se puede propagar a través del tiempo y las capas. Al mantener un error más constante, permiten que las redes recurrentes continúen aprendiendo durante muchos pasos de tiempo (más de 1000), abriendo así un canal para vincular causas y efectos de forma remota.
-
-Las neuronas de las LSTMs contienen información fuera del flujo normal de la red recurrente en una celda cerrada. Esta información se puede almacenar, escribir o leer en una celda. La celda toma decisiones sobre qué almacenar, y cuándo permitir lecturas, escrituras y borrados a través de puertas que se abren y cierran. Estas puertas son analógicas, implementadas con la multiplicación de elementos por los sigmoides (están todos en el rango de 0-1). 
-
-Esas puertas actúan sobre las señales que reciben, y similares a los nodos de la red neuronal, bloquean o transmiten información basada en su fuerza e importación, que filtran con sus propios conjuntos de pesos. Estos pesos, como los pesos que modulan la entrada y los estados ocultos, se ajustan a través del proceso de aprendizaje de las redes recurrentes. Es decir, las celdas aprenden cuándo permitir que los datos entren, salgan o se eliminen a través del proceso iterativo de hacer conjeturas, error de retropropagación y ajustar pesos a través del descenso de gradiente.
-
---- 
-
-El LSTM tiene la capacidad de eliminar o agregar información al estado de la celda, cuidadosamente regulada por estructuras llamadas puertas.
-
-Las puertas son una forma de opcionalmente dejar pasar la información. Se componen de una capa de red neuronal sigmoide y una operación de multiplicación puntual.
-
-La capa sigmóide da salida a números entre cero y uno, describiendo cuánto de cada componente debe dejarse pasar. Un valor de cero significa "no dejar nada pasar", mientras que el valor de uno significa "¡deja todo pasar!"
-
-Un LSTM tiene tres de estas puertas, para proteger y controlar el estado de la celda.
 
 --- http://www.dlsi.ua.es/~japerez/pub/pdf/tesi2002-slide.pdf
 
@@ -494,6 +486,13 @@ dataset for pre-training
 Linear Autoencoder-based (Pasa & Sperduti, NIPS, 2014)
 encodes the input sequences and uses the obtained weights as
 initial weights for the input-to-hidden connections of a RNN
+
+
+
+
+Algo sobre variantes
+http://colah.github.io/posts/2015-08-Understanding-LSTMs/
+
 
 --- Ultima capa --- Ultima capa --- Ultima capa --- Ultima capa --- Ultima capa --- 
 
